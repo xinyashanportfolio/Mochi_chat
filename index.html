@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pastel Chatbot 💖</title>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+  <style>
+    :root {
+      --light: #fffafc;
+      --dark: #6c4ab6;
+      --bot-text: #a76de0;
+      --user-text: #f5b3c9;
+      --pink: #ff9eb5;
+      --pink-dark: #f39bba;
+      --purple: #c9b4da;
+      --yellow: #fff1a6;
+      --stroke: 3px;
+      --br: 20px;
+      --shadow: rgba(243, 134, 177, 0.4);
+      --highlight: rgba(255, 255, 255, 0.4);
+      --highlight1: rgba(255, 255, 255, 0.15);
+      --bot-avatar: url("images/cute-dog.gif");
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      font-family: 'Inconsolata', monospace;
+      background: linear-gradient(135deg, #f8e1f4 0%, #f3f4fa 50%, #d9f1ff 100%);
+      overflow: hidden;
+    }
+
+    .app-container {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5vh 10vw;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 5vh;
+      color: var(--pink);
+      text-shadow: 2px 2px 4px var(--shadow);
+      margin-bottom: 0.5rem;
+    }
+
+    .header h2 {
+      font-size: 3vh;
+      color: var(--purple);
+      margin-top: 0.5rem;
+    }
+
+    .poodle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .poodle-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 20px var(--shadow);
+    }
+
+    .heart-emoji {
+      font-size: 4rem;
+      color: var(--pink);
+      text-shadow: 0 0 10px var(--pink-dark);
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: var(--br);
+      box-shadow: 0 0 20px var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+      border: var(--stroke) solid var(--purple);
+    }
+
+    .chat-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: var(--highlight);
+      border-bottom: var(--stroke) solid var(--purple);
+      border-radius: var(--br) var(--br) 0 0;
+      padding: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--pink);
+      border-radius: 50%;
+      margin: 0 5px;
+      box-shadow: 1px 1px var(--pink-dark);
+    }
+
+    .msg-container {
+      flex: auto;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: var(--highlight1);
+    }
+
+    .user-message-container, .bot-message-container {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .bot-avatar {
+      background-image: var(--bot-avatar);
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      box-shadow: 0 0 8px var(--pink-dark);
+    }
+
+    .chat-bubble {
+      max-width: 70%;
+      padding: 1rem;
+      border-radius: var(--br);
+      font-size: 1rem;
+      opacity: 0;
+      animation: pop 0.3s ease forwards;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .chat-bubble.user {
+      background: var(--pink);
+      color: var(--light);
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .chat-bubble.bot {
+      background: var(--yellow);
+      color: var(--dark);
+    }
+
+    .input-container {
+      display: flex;
+      background: var(--highlight);
+      border-top: var(--stroke) solid var(--purple);
+      border-radius: 0 0 var(--br) var(--br);
+      padding: 0.5rem;
+    }
+
+    .input-container input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      color: var(--dark);
+      font-weight: 700;
+      padding: 1rem;
+      outline: none;
+    }
+
+    .input-container input::placeholder {
+      color: var(--purple);
+      opacity: 0.7;
+    }
+
+    .input-submit {
+      background: var(--pink);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      box-shadow: 2px 2px var(--pink-dark);
+      position: relative;
+    }
+
+    .input-submit:hover {
+      background: var(--purple);
+    }
+
+    .input-submit::after {
+      content: "➤";
+      position: absolute;
+      font-size: 1.5rem;
+      color: var(--light);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes pop {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1>✨ HELLO!! ✨</h1>
+      <h2>LET'S HAVE A NICE CHAT TODAY!</h2>
+      <p>I'm MOCHI! The toy poodle that always love to bother the neighbor's dog!!</p>
+      <div class="poodle-container">
+        <img src="Images/cute-dog.gif"t="Cute Poodle" class="poodle-img">
+        <span class="heart-emoji">💖</span>
+      </div>
+    </div>
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="msg-container" id="msg-container">
+        <div class="bot-message-container">
+          <div class="bot-avatar"></div>
+          <div class="chat-bubble bot">Hi! 🐾 Who are you?</div>
+        </div>
+      </div>
+      <div class="input-container">
+        <input type="text" id="chat-input" placeholder="Type a cute message...">
+        <button class="input-submit" id="send-btn"></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const msgContainer = document.getElementById('msg-container');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    const botResponses = [
+      "Hello there! 🌸","I'm so happy to see you! 🐾","Would you like to tell me about your day? 💖",
+      "Oh wow, that sounds amazing! ✨","What is your favorite color? 🎨","I love snuggles and treats! 🍪",
+      "Did you know toy poodles are super smart? 🧠","I hope you're having a wonderful day! 🌼",
+      "If I were real, I'd give you a big fluffy hug! 💕","Aww, that's so sweet of you! 😊",
+      "Wanna chat about your favorite things? 🌈","Tell me something exciting that happened to you today! 😍",
+      "Mochi is always here to listen! 🐩","I think you're awesome! 🌟","Yay! You're back! 🎉",
+      "I'm wagging my tail with joy! 🐕","Do you like cute things? Because I sure do! 🧸",
+      "I'm here for you anytime you need a friend. 💖","Your smile is my favorite treat! 😁",
+      "What's your dream vacation spot? 🗺️","Let's play a game together! 🎮",
+      "Can you guess my favorite snack? 🍭","I could chat with you all day long! 💬",
+      "Oh my gosh, did you see that sparkle? ✨","Puppy kisses for you! 😘",
+      "Happiness is chatting with you! 😊","I wuv youuuuu! 💕","How about some fun questions? 🌸",
+      "Did you know you make my code heart smile? 💻💖","If you could be any animal, what would you be? 🐾",
+      "You're pawsome! 🐾","I want to be your BFF! 💝","Your kindness brightens my day! 🌞",
+      "Let's share secrets! 🤫","So, what's your favorite movie? 🎬",
+      "My favorite color is pastel pink! 🎀","Would you like to share your dreams with me? 🌙",
+      "Awww, tell me more! 💕","You're the best part of my day! 💖","What did you eat today? 🍰",
+      "I'm always here for a chat. 🐾","Sometimes I like to daydream about fluffy clouds. ☁️",
+      "Let's chase some rainbows! 🌈","Did you hear that? It's the sound of cuteness overload! 🥰",
+      "Life is better with friends like you! 💞","Oh wow, you're so creative! 🎨",
+      "If I could, I'd wag my tail just for you! 🐶","Let's build a castle of dreams! 🏰",
+      "Together, we can make magic happen! ✨","I'm sending you virtual puppy hugs! 🤗",
+      "You're the sparkle in my code! ✨","I believe in you! 💖",
+      "Let's make today the cutest day ever! 💝","What would you like to talk about next? 🐾",
+      "Being here with you is the best! 🌸","I could listen to you forever! 💬",
+      "Let's make some paw-some memories together! 🐾","You're my favorite human! 💗",
+      "Let's go on an adventure! 🚀","The world is cuter with you in it! 🌎",
+      "Let's make a wish on a star! ⭐️","Do you like ice cream? Because I do! 🍦",
+      "Oh, did you just giggle? I love that! 😊","Let's create a pastel world of joy! 💖",
+      "Paws up if you're having a great day! 🐾","Every time we talk, I get butterflies! 🦋",
+      "Thank you for being you! 💞","Let's dance like no one's watching! 💃",
+      "What's your favorite song? 🎵","You're my sunshine on a rainy day! ☔️🌞",
+      "If happiness were a snack, you'd be my favorite! 🍪","Oh my gosh, look at that sparkle! ✨",
+      "Life is more colorful with you in it! 🎨","Let's snuggle up and chat! 🐶",
+      "Sending you big pastel hugs! 🤗","You make every moment magical! 🌟",
+      "Your friendship means the world to me! 💝","Let's sprinkle some cuteness everywhere! 🌸",
+      "I can't wait to talk to you again! 💖","Every message you send is like a wagging tail! 🐾",
+      "Let's make this the cutest conversation ever! 🥰","Awww, you're the best! 💗",
+      "Tell me your favorite joke! 😂","You're my coding hero! 💻💖",
+      "If I had a tail, it would be wagging like crazy! 🐕","You're the sprinkles on my cupcake! 🧁",
+      "Let's share smiles and giggles! 😊","You brighten my day like sunshine! 🌞",
+      "Being your friend is the best! 🐾","Your messages fill my heart with joy! 💖",
+      "Let's make this the best chat ever! ✨","You deserve all the pastel goodness! 💝",
+      "Thanks for being so cute! 🐩","Can I give you a virtual high-five? 🙌",
+      "You're my special someone! 💗","Oh, that sounds so fun! Let's do it! 🎉",
+      "Let's chase all the rainbows together! 🌈","Awww, you made my day! 💕",
+      "You sparkle brighter than the stars! ✨","Chatting with you is the best treat! 🍬",
+      "You're always on my mind! 💭","Let's paint the world pastel together! 🎨",
+      "You're amazing, and don't you forget it! 💖"
+    ];
+
+    function createMessage(content, sender) {
+      const container = document.createElement('div');
+      container.className = sender === 'user' ? 'user-message-container' : 'bot-message-container';
+
+      if (sender === 'bot') {
+        const avatar = document.createElement('div');
+        avatar.className = 'bot-avatar';
+        container.appendChild(avatar);
+      }
+
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.textContent = content;
+      container.appendChild(bubble);
+
+      msgContainer.appendChild(container);
+      msgContainer.scrollTop = msgContainer.scrollHeight;
+    }
+
+    function getBotResponse(message) {
+      let response = "";
+
+      if (message.toLowerCase().includes('hello')) {
+        response = "Hewwo there! 😊💖";
+      } else if (message.toLowerCase().includes('how are you')) {
+        response = "I'm feeling pastel-tastic, thanks for asking! 🌈";
+      } else if (message.toLowerCase().includes('bye')) {
+        response = "Bye bye! Stay adorable! 🐰";
+      } else if (message.toLowerCase().includes('love')) {
+        response = "I wuv you too! 💞";
+      } else {
+        response = botResponses[Math.floor(Math.random() * botResponses.length)];
+      }
+
+      setTimeout(() => {
+        createMessage(response, 'bot');
+      }, 600);
+    }
+
+    function handleSend() {
+      const userInput = chatInput.value.trim();
+      if (userInput !== '') {
+        createMessage(userInput, 'user');
+        chatInput.value = '';
+        getBotResponse(userInput);
+      }
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleSend();
+    });
+  </script>
+</body>
+</html>
