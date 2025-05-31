@@ -28,4 +28,6 @@ A pastel-themed chatbot featuring a playful UI with adorable, animated chat bubb
 
 Thanks for checking it out! Let's spread pastel cheer and build more cute, interactive web experiences together! 💖🐩
 
-Possible future updates -> A interactive text adventure style game featuring Mochi and You as the main character 
+Possible future updates ->
+A interactive text adventure style game featuring Mochi and You as the main character 
+A sassier Mochi. Whatever you say there's going to be a good comeback! 
