@@ -15,7 +15,7 @@ A pastel-themed chatbot featuring a playful UI with adorable, animated chat bubb
 - 🌈 **Partially Responsive Design:** Flexible layout using CSS flexbox, though not fully responsive yet.  
 - 🐾 **Interactive Chat:** Users can type messages, and the bot replies with 100+ cute, friendly responses.  
 - 💖 **Smooth Animations:** Chat bubbles pop in with subtle animations for an extra dose of charm.
-- 🌸 **100 dialogues** Mochi has a variety of responses for you! 
+- 🌸 **100 dialogues:** Mochi has a variety of responses for you! 
 
 ---
 
