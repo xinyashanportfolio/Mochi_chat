@@ -13,7 +13,7 @@ A pastel-themed chatbot featuring a playful UI with adorable, animated chat bubb
 
 - 🎀 **Pastel Styling:** Soft colors, gradients, and adorable icons create a welcoming feel.  
 - 🌈 **Partially Responsive Design:** Flexible layout using CSS flexbox, though not fully responsive yet.  
-- 🐾 **Interactive Chat:** Users can type messages, and the bot replies with 100+ cute, friendly responses.  
+- 🐾 **Interactive Chat:** Users can type messages, and the bot replies with various cute, friendly responses.  
 - 💖 **Smooth Animations:** Chat bubbles pop in with subtle animations for an extra dose of charm.
 ---
 
