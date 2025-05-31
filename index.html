@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,6 @@
       --shadow: rgba(243, 134, 177, 0.4);
       --highlight: rgba(255, 255, 255, 0.4);
       --highlight1: rgba(255, 255, 255, 0.15);
-      --bot-avatar: url("images/cute-dog.gif");
     }
 
     body, html {
@@ -45,7 +45,6 @@
     .header {
       text-align: center;
       margin-bottom: 2rem;
-      position: relative;
     }
 
     .header h1 {
@@ -130,17 +129,6 @@
       margin-bottom: 1rem;
     }
 
-    .bot-avatar {
-      background-image: var(--bot-avatar);
-      background-size: cover;
-      background-position: center;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-      box-shadow: 0 0 8px var(--pink-dark);
-    }
-
     .chat-bubble {
       max-width: 70%;
       padding: 1rem;
@@ -223,9 +211,9 @@
     <div class="header">
       <h1>✨ HELLO!! ✨</h1>
       <h2>LET'S HAVE A NICE CHAT TODAY!</h2>
-      <p>I'm MOCHI! The toy poodle that always love to bother the neighbor's dog!!</p>
+      <p>I'm MOCHI! The toy poodle that always loves to bother the neighbor's dog!!</p>
       <div class="poodle-container">
-        <img src="Images/cute-dog.gif"t="Cute Poodle" class="poodle-img">
+        <img src="Images/cute-dog.gif" alt="Cute Poodle" class="poodle-img">
         <span class="heart-emoji">💖</span>
       </div>
     </div>
@@ -237,7 +225,6 @@
       </div>
       <div class="msg-container" id="msg-container">
         <div class="bot-message-container">
-          <div class="bot-avatar"></div>
           <div class="chat-bubble bot">Hi! 🐾 Who are you?</div>
         </div>
       </div>
@@ -254,66 +241,60 @@
     const sendBtn = document.getElementById('send-btn');
 
     const botResponses = [
-      "Hello there! 🌸","I'm so happy to see you! 🐾","Would you like to tell me about your day? 💖",
-      "Oh wow, that sounds amazing! ✨","What is your favorite color? 🎨","I love snuggles and treats! 🍪",
-      "Did you know toy poodles are super smart? 🧠","I hope you're having a wonderful day! 🌼",
-      "If I were real, I'd give you a big fluffy hug! 💕","Aww, that's so sweet of you! 😊",
-      "Wanna chat about your favorite things? 🌈","Tell me something exciting that happened to you today! 😍",
-      "Mochi is always here to listen! 🐩","I think you're awesome! 🌟","Yay! You're back! 🎉",
-      "I'm wagging my tail with joy! 🐕","Do you like cute things? Because I sure do! 🧸",
-      "I'm here for you anytime you need a friend. 💖","Your smile is my favorite treat! 😁",
-      "What's your dream vacation spot? 🗺️","Let's play a game together! 🎮",
-      "Can you guess my favorite snack? 🍭","I could chat with you all day long! 💬",
-      "Oh my gosh, did you see that sparkle? ✨","Puppy kisses for you! 😘",
-      "Happiness is chatting with you! 😊","I wuv youuuuu! 💕","How about some fun questions? 🌸",
-      "Did you know you make my code heart smile? 💻💖","If you could be any animal, what would you be? 🐾",
-      "You're pawsome! 🐾","I want to be your BFF! 💝","Your kindness brightens my day! 🌞",
-      "Let's share secrets! 🤫","So, what's your favorite movie? 🎬",
-      "My favorite color is pastel pink! 🎀","Would you like to share your dreams with me? 🌙",
-      "Awww, tell me more! 💕","You're the best part of my day! 💖","What did you eat today? 🍰",
-      "I'm always here for a chat. 🐾","Sometimes I like to daydream about fluffy clouds. ☁️",
-      "Let's chase some rainbows! 🌈","Did you hear that? It's the sound of cuteness overload! 🥰",
-      "Life is better with friends like you! 💞","Oh wow, you're so creative! 🎨",
-      "If I could, I'd wag my tail just for you! 🐶","Let's build a castle of dreams! 🏰",
-      "Together, we can make magic happen! ✨","I'm sending you virtual puppy hugs! 🤗",
-      "You're the sparkle in my code! ✨","I believe in you! 💖",
-      "Let's make today the cutest day ever! 💝","What would you like to talk about next? 🐾",
-      "Being here with you is the best! 🌸","I could listen to you forever! 💬",
-      "Let's make some paw-some memories together! 🐾","You're my favorite human! 💗",
-      "Let's go on an adventure! 🚀","The world is cuter with you in it! 🌎",
-      "Let's make a wish on a star! ⭐️","Do you like ice cream? Because I do! 🍦",
-      "Oh, did you just giggle? I love that! 😊","Let's create a pastel world of joy! 💖",
-      "Paws up if you're having a great day! 🐾","Every time we talk, I get butterflies! 🦋",
-      "Thank you for being you! 💞","Let's dance like no one's watching! 💃",
-      "What's your favorite song? 🎵","You're my sunshine on a rainy day! ☔️🌞",
-      "If happiness were a snack, you'd be my favorite! 🍪","Oh my gosh, look at that sparkle! ✨",
-      "Life is more colorful with you in it! 🎨","Let's snuggle up and chat! 🐶",
-      "Sending you big pastel hugs! 🤗","You make every moment magical! 🌟",
-      "Your friendship means the world to me! 💝","Let's sprinkle some cuteness everywhere! 🌸",
-      "I can't wait to talk to you again! 💖","Every message you send is like a wagging tail! 🐾",
-      "Let's make this the cutest conversation ever! 🥰","Awww, you're the best! 💗",
-      "Tell me your favorite joke! 😂","You're my coding hero! 💻💖",
-      "If I had a tail, it would be wagging like crazy! 🐕","You're the sprinkles on my cupcake! 🧁",
-      "Let's share smiles and giggles! 😊","You brighten my day like sunshine! 🌞",
-      "Being your friend is the best! 🐾","Your messages fill my heart with joy! 💖",
-      "Let's make this the best chat ever! ✨","You deserve all the pastel goodness! 💝",
-      "Thanks for being so cute! 🐩","Can I give you a virtual high-five? 🙌",
-      "You're my special someone! 💗","Oh, that sounds so fun! Let's do it! 🎉",
-      "Let's chase all the rainbows together! 🌈","Awww, you made my day! 💕",
-      "You sparkle brighter than the stars! ✨","Chatting with you is the best treat! 🍬",
-      "You're always on my mind! 💭","Let's paint the world pastel together! 🎨",
+      "Hello there! 🌸", "I'm so happy to see you! 🐾", "Would you like to tell me about your day? 💖",
+      "Oh wow, that sounds amazing! ✨", "What is your favorite color? 🎨", "I love snuggles and treats! 🍪",
+      "Did you know toy poodles are super smart? 🧠", "I hope you're having a wonderful day! 🌼",
+      "If I were real, I'd give you a big fluffy hug! 💕", "Aww, that's so sweet of you! 😊",
+      "Wanna chat about your favorite things? 🌈", "Tell me something exciting that happened to you today! 😍",
+      "Mochi is always here to listen! 🐩", "I think you're awesome! 🌟", "Yay! You're back! 🎉",
+      "I'm wagging my tail with joy! 🐕", "Do you like cute things? Because I sure do! 🧸",
+      "I'm here for you anytime you need a friend. 💖", "Your smile is my favorite treat! 😁",
+      "What's your dream vacation spot? 🗺️", "Let's play a game together! 🎮",
+      "Can you guess my favorite snack? 🍭", "I could chat with you all day long! 💬",
+      "Oh my gosh, did you see that sparkle? ✨", "Puppy kisses for you! 😘",
+      "Happiness is chatting with you! 😊", "I wuv youuuuu! 💕", "How about some fun questions? 🌸",
+      "Did you know you make my code heart smile? 💻💖", "If you could be any animal, what would you be? 🐾",
+      "You're pawsome! 🐾", "I want to be your BFF! 💝", "Your kindness brightens my day! 🌞",
+      "Let's share secrets! 🤫", "So, what's your favorite movie? 🎬",
+      "My favorite color is pastel pink! 🎀", "Would you like to share your dreams with me? 🌙",
+      "Awww, tell me more! 💕", "You're the best part of my day! 💖", "What did you eat today? 🍰",
+      "I'm always here for a chat. 🐾", "Sometimes I like to daydream about fluffy clouds. ☁️",
+      "Let's chase some rainbows! 🌈", "Did you hear that? It's the sound of cuteness overload! 🥰",
+      "Life is better with friends like you! 💞", "Oh wow, you're so creative! 🎨",
+      "If I could, I'd wag my tail just for you! 🐶", "Let's build a castle of dreams! 🏰",
+      "Together, we can make magic happen! ✨", "I'm sending you virtual puppy hugs! 🤗",
+      "You're the sparkle in my code! ✨", "I believe in you! 💖",
+      "Let's make today the cutest day ever! 💝", "What would you like to talk about next? 🐾",
+      "Being here with you is the best! 🌸", "I could listen to you forever! 💬",
+      "Let's make some paw-some memories together! 🐾", "You're my favorite human! 💗",
+      "Let's go on an adventure! 🚀", "The world is cuter with you in it! 🌎",
+      "Let's make a wish on a star! ⭐️", "Do you like ice cream? Because I do! 🍦",
+      "Oh, did you just giggle? I love that! 😊", "Let's create a pastel world of joy! 💖",
+      "Paws up if you're having a great day! 🐾", "Every time we talk, I get butterflies! 🦋",
+      "Thank you for being you! 💞", "Let's dance like no one's watching! 💃",
+      "What's your favorite song? 🎵", "You're my sunshine on a rainy day! ☔️🌞",
+      "If happiness were a snack, you'd be my favorite! 🍪", "Oh my gosh, look at that sparkle! ✨",
+      "Life is more colorful with you in it! 🎨", "Let's snuggle up and chat! 🐶",
+      "Sending you big pastel hugs! 🤗", "You make every moment magical! 🌟",
+      "Your friendship means the world to me! 💝", "Let's sprinkle some cuteness everywhere! 🌸",
+      "I can't wait to talk to you again! 💖", "Every message you send is like a wagging tail! 🐾",
+      "Let's make this the cutest conversation ever! 🥰", "Awww, you're the best! 💗",
+      "Tell me your favorite joke! 😂", "You're my coding hero! 💻💖",
+      "If I had a tail, it would be wagging like crazy! 🐕", "You're the sprinkles on my cupcake! 🧁",
+      "Let's share smiles and giggles! 😊", "You brighten my day like sunshine! 🌞",
+      "Being your friend is the best! 🐾", "Your messages fill my heart with joy! 💖",
+      "Let's make this the best chat ever! ✨", "You deserve all the pastel goodness! 💝",
+      "Thanks for being so cute! 🐩", "Can I give you a virtual high-five? 🙌",
+      "You're my special someone! 💗", "Oh, that sounds so fun! Let's do it! 🎉",
+      "Let's chase all the rainbows together! 🌈", "Awww, you made my day! 💕",
+      "You sparkle brighter than the stars! ✨", "Chatting with you is the best treat! 🍬",
+      "You're always on my mind! 💭", "Let's paint the world pastel together! 🎨",
       "You're amazing, and don't you forget it! 💖"
     ];
 
     function createMessage(content, sender) {
       const container = document.createElement('div');
       container.className = sender === 'user' ? 'user-message-container' : 'bot-message-container';
-
-      if (sender === 'bot') {
-        const avatar = document.createElement('div');
-        avatar.className = 'bot-avatar';
-        container.appendChild(avatar);
-      }
 
       const bubble = document.createElement('div');
       bubble.className = `chat-bubble ${sender}`;
@@ -353,10 +334,4 @@
       }
     }
 
-    sendBtn.addEventListener('click', handleSend);
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') handleSend();
-    });
-  </script>
-</body>
-</html>
+    sendBtn.addEventListener('click',
